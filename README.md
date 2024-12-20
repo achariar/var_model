@@ -114,9 +114,16 @@ roots <- roots(var_model)
 # Plot stability
 plot(stability)
 ```
-The model is stationary (all roots are less than 1).
 ![Image Placeholder 7](images/7.png)
-| Root Value | 0.7431 | 0.4010 | 0.1095 | 0.0620 |
+<table>
+  <tr>
+    <th>Root Value</th>
+    <td>0.7431</td>
+    <td>0.4010</td>
+    <td>0.1095</td>
+    <td>0.0620</td>
+  </tr>
+</table>
 Since all roots are less than 1, the model is confirmed to be stationary. This indicates that the VAR model satisfies the stability condition and that its dynamics are well-behaved over time. That is, the VAR model will not produce explosive or diverging responses over time but will instead converge back to equilibrium after a shock. Non-stationary models, on the other hand, can lead to misleading or unreliable IRFs because they may reflect trends rather than genuine dynamic responses. With stationarity, the IRFs accurately reflect the true underlying relationships in the data.
 
 #### Interpretation:
@@ -134,6 +141,16 @@ fevd_result <- fevd(var_model, n.ahead = 8)
 plot(fevd_result, legend.pos = "topright")
 ```
 ![Image Placeholder 8](images/8.png)
+#### Key Elements:
+- **Horizon (X-axis):**
+  - Represents time periods (e.g., days, months, or years, depending on the data frequency).
+- **Percentage (Y-axis):**
+  - Shows the proportion of total forecast error variance attributed to each variable's shocks, summing to 100% at every horizon.
+#### Insights:
+- **For `e`:** Initially dominated by its own shocks, but other variables (prod, rw, U) contribute more over time.
+- **For `prod`:** Primarily influenced by its own shocks at short horizons, with increasing contributions from `e` and `rw` at longer horizons.
+- **For `rw`:** Initially driven by its own shocks, but cross-variable effects (e.g., `e`, `prod`, and `U`) grow over time.
+- **For `U`:** Shows stronger interdependence, with variance shared more evenly across variables even at shorter horizons.
 
 #### Interpretation:
 - **FEVD** explains the proportion of forecast error variance for each variable caused by shocks to itself and other variables.
@@ -150,12 +167,16 @@ irf_result <- irf(var_model, impulse = "prod", response = c("e", "rw", "U"), n.a
 plot(irf_result)
 ```
 ![Image Placeholder 10](images/10.png)
+#### Key Elements:
+- **X-axis (Horizon):** Time periods showing how a shock at time 0 impacts variables over time.
+- **Y-axis (Response):** Magnitude and direction of the variable's response (positive = increase, negative = decrease).
+- **Lines:** Solid line represents the estimated response, and dashed lines are confidence intervals.
 
 #### Interpretation:
-- A shock to **prod** has:
-  - A transient effect on **e** (employment), stabilizing over time.
-  - A notable impact on **rw** (real wages), which gradually diminishes.
-  - A smaller but noticeable influence on **U** (unemployment), returning to equilibrium.
+- A positive shock to **`prod`** has:
+  - A transient effect on **`e` (employment)**, stabilizing over time.
+  - A notable impact on **`rw` (real wages)**, which gradually diminishes.
+  - A smaller but noticeable influence on **`U` (unemployment)**, returning to equilibrium.
 
 ---
 
@@ -170,12 +191,12 @@ forecast <- predict(var_model, n.ahead = 8)
 plot(forecast)
 ```
 ![Image Placeholder 11](images/11.png)
+#### Key Elements:
+- **X-axis (Time):** Sequential time periods for the forecast.
+- **Y-axis (Values):** Predicted values of the variables (e.g., `prod`, `rw`, `e`, `U`).
+- **Lines:** Solid line shows the forecast, and dashed lines represent confidence intervals (uncertainty).
 
 #### Interpretation:
-- Forecasts provide insights into the future behavior of variables (**e**, **prod**, **rw**, **U**).
-- Confidence intervals widen over time, reflecting increasing uncertainty.
+- Forecasts provide insights into the future behavior of variables (**`e`**, **`prod`**, **`rw`**, **`U`**).
+- Confidence intervals widen over time, reflecting increasing uncertainty in the predictions.
 
----
-
-## Conclusion
-This guide demonstrates how to conduct a comprehensive VAR analysis using R. By following these steps, you can model and interpret the dynamic interrelationships among key economic indicators. For additional information, consult the official documentation of the `vars` package.
