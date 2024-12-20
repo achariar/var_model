@@ -114,17 +114,10 @@ roots <- roots(var_model)
 # Plot stability
 plot(stability)
 ```
-[1] 0.74310551 0.40100508 0.10945167 0.06195264
 The model is stationary (all roots are less than 1).
 ![Image Placeholder 7](images/7.png)
-| Root Value |
-|------------|
-| 0.7431     |
-| 0.4010     |
-| 0.1095     |
-| 0.0620     |
-
-Since all roots are less than 1, the model is confirmed to be stationary. This indicates that the VAR model satisfies the stability condition, and its dynamics are well-behaved over time.
+| Root Value | 0.7431 | 0.4010 | 0.1095 | 0.0620 |
+Since all roots are less than 1, the model is confirmed to be stationary. This indicates that the VAR model satisfies the stability condition and that its dynamics are well-behaved over time. That is, the VAR model will not produce explosive or diverging responses over time but will instead converge back to equilibrium after a shock. Non-stationary models, on the other hand, can lead to misleading or unreliable IRFs because they may reflect trends rather than genuine dynamic responses. With stationarity, the IRFs accurately reflect the true underlying relationships in the data.
 
 #### Interpretation:
 - The VAR model is stable if all roots of the characteristic polynomial are less than 1.
