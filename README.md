@@ -61,7 +61,6 @@ needs_diff <- adf_test > 0.05
 Canada_diff <- if (any(needs_diff)) diff(Canada) else Canada
 ```
 ![Image Placeholder 1](images/1.png)
-![Image Placeholder 2](images/2.png)
 
 #### Interpretation:
 - **Augmented Dickey-Fuller (ADF) tests** indicate whether the variables are stationary.
@@ -77,7 +76,7 @@ Canada_diff <- if (any(needs_diff)) diff(Canada) else Canada
 lag_selection <- VARselect(Canada_diff, lag.max = 10, type = "const")
 optimal_lag <- lag_selection$selection["AIC(n)"]
 ```
-![Image Placeholder 3](images/3.png)
+![Image Placeholder 2](images/2.png)
 
 #### Interpretation:
 - The **Akaike Information Criterion (AIC)** suggests the optimal number of lags for the VAR model.
@@ -93,6 +92,7 @@ optimal_lag <- lag_selection$selection["AIC(n)"]
 var_model <- VAR(Canada_diff, p = optimal_lag, type = "const")
 summary(var_model)
 ```
+![Image Placeholder 3](images/3.png)
 ![Image Placeholder 4](images/4.png)
 ![Image Placeholder 5](images/5.png)
 ![Image Placeholder 6](images/6.png)
